@@ -29,8 +29,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-public final class RxInputBarAccessoryViewDelegate:
-    DelegateProxy<InputBarAccessoryView, InputBarAccessoryViewDelegate>,
+public final class RxInputBarAccessoryViewDelegate: DelegateProxy<InputBarAccessoryView, InputBarAccessoryViewDelegate>,
     DelegateProxyType,
 InputBarAccessoryViewDelegate {
 

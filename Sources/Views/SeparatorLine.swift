@@ -36,9 +36,9 @@ import UIKit
  3. Intended to be used in an `InputStackView`
  */
 open class SeparatorLine: UIView {
-    
+
     // MARK: - Properties
-    
+
     /// The height of the line
   open var height: CGFloat = 1.0 / UIScreen.main.scale {
         didSet {
@@ -46,23 +46,23 @@ open class SeparatorLine: UIView {
             invalidateIntrinsicContentSize()
         }
     }
-    
+
     open override var intrinsicContentSize: CGSize {
         return CGSize(width: super.intrinsicContentSize.width, height: height)
     }
-    
+
     // MARK: - Initialization
-    
+
     public override init(frame: CGRect) {
         super.init(frame: frame)
         setup()
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
-    
+
     /// Sets up the default properties
     open func setup() {
         if #available(iOS 13, *) {

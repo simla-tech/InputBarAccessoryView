@@ -45,7 +45,6 @@ struct InputBarUI: UIViewRepresentable {
     }
 }
 
-
 public struct SwiftUIExample: View {
     let style: InputBarStyle
     let conversation: SampleData.Conversation
@@ -53,7 +52,6 @@ public struct SwiftUIExample: View {
     var table: CommonTableViewControllerUI {
         CommonTableViewControllerUI(style: style, conversation: conversation)
     }
-
 
     public var body: some View {
         VStack {

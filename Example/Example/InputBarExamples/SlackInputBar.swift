@@ -10,16 +10,16 @@ import UIKit
 import InputBarAccessoryView
 
 final class SlackInputBar: InputBarAccessoryView {
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func configure() {
         let items = [
             makeButton(named: "ic_camera").onTextViewDidChange { button, textView in
@@ -66,11 +66,11 @@ final class SlackInputBar: InputBarAccessoryView {
             }
         ]
         items.forEach { $0.tintColor = .lightGray }
-        
+
         // We can change the container insets if we want
         inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0)
         inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 5, bottom: 8, right: 5)
-        
+
         let maxSizeItem = InputBarButtonItem()
             .configure {
                 $0.image = UIImage(named: "icons8-expand")?.withRenderingMode(.alwaysTemplate)
@@ -84,15 +84,13 @@ final class SlackInputBar: InputBarAccessoryView {
         rightStackView.alignment = .top
         setStackViewItems([maxSizeItem], forStack: .right, animated: false)
         setRightStackViewWidthConstant(to: 20, animated: false)
-        
+
         // Finally set the items
         setStackViewItems(items, forStack: .bottom, animated: false)
 
         shouldAnimateTextDidChangeLayout = true
     }
-    
 
-    
     private func makeButton(named: String) -> InputBarButtonItem {
         return InputBarButtonItem()
             .configure {
@@ -107,16 +105,15 @@ final class SlackInputBar: InputBarAccessoryView {
                 print("Item Tapped")
         }
     }
-    
+
 }
 
 extension SlackInputBar: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
 // Local variable inserted by Swift 4.2 migrator.
 let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
 
-        
         picker.dismiss(animated: true, completion: {
             if let pickedImage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage {
                 self.inputPlugins.forEach { _ = $0.handleInput(of: pickedImage) }
@@ -126,11 +123,11 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
 }
 
 // Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+private func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
 	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
 }
 
 // Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+private func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
 	return input.rawValue
 }

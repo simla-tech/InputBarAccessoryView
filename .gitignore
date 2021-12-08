@@ -1,7 +1,13 @@
 # OS X
 .DS_Store
 
+# Tuist
+Derived/
+Example/
+
 # Xcode
+*.xcodeproj
+*.xcworkspace
 
 ## Build generated
 build/

@@ -44,4 +44,3 @@ final class NoTextViewInputBar: InputBarAccessoryView {
         setRightStackViewWidthConstant(to: 52, animated: false)
     }
 }
-

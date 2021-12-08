@@ -29,7 +29,7 @@ import Foundation
 class Lorem {
     private static let wordList = [
         "alias", "consequatur", "aut", "perferendis", "sit", "voluptatem",
-        "accusantium", "doloremque", "aperiam", "eaque","ipsa", "quae", "ab",
+        "accusantium", "doloremque", "aperiam", "eaque", "ipsa", "quae", "ab",
         "illo", "inventore", "veritatis", "et", "quasi", "architecto",
         "beatae", "vitae", "dicta", "sunt", "explicabo", "aspernatur", "aut",
         "odit", "aut", "fugit", "sed", "quia", "consequuntur", "magni",
@@ -66,7 +66,7 @@ class Lorem {
         "sapiente", "delectus", "ut", "aut", "reiciendis", "voluptatibus",
         "maiores", "doloribus", "asperiores", "repellat"
     ]
-    
+
     /**
      Return a random word.
      
@@ -75,7 +75,7 @@ class Lorem {
     class func word() -> String {
         return wordList.random()!
     }
-    
+
     /**
      Return an array of `count` words.
      
@@ -86,7 +86,7 @@ class Lorem {
     class func words(nbWords: Int = 3) -> [String] {
         return wordList.random(nbWords)
     }
-    
+
     /**
      Return a string of `count` words.
      
@@ -94,10 +94,10 @@ class Lorem {
      
      - returns: Returns a string of `count` words.
      */
-    class func words(nbWords : Int = 3) -> String {
+    class func words(nbWords: Int = 3) -> String {
         return words(nbWords: nbWords).joined(separator: " ")
     }
-    
+
     /**
      Generate a sentence of `nbWords` words.
      - parameter nbWords:  The number of words the sentence should contain.
@@ -105,16 +105,16 @@ class Lorem {
      +/- 40% of `nbWords`.
      - returns:
      */
-    class func sentence(nbWords : Int = 6, variable : Bool = true) -> String {
+    class func sentence(nbWords: Int = 6, variable: Bool = true) -> String {
         if nbWords <= 0 {
             return ""
         }
-        
-        let result : String = self.words(nbWords: variable ? nbWords.randomize(variation: 40) : nbWords)
-        
+
+        let result: String = self.words(nbWords: variable ? nbWords.randomize(variation: 40) : nbWords)
+
         return result.firstCapitalized + "."
     }
-    
+
     /**
      Generate an array of sentences.
      - parameter nbSentences: The number of sentences to generate.
@@ -124,16 +124,16 @@ class Lorem {
     class func sentences(nbSentences: Int = 3) -> [String] {
         return (0..<nbSentences).map { _ in sentence() }
     }
-    
+
     /**
      Generate a string of random sentences.
      - parameter nbSentences: The number of sentences to generate.
      - returns: Returns a string of random sentences.
      */
-    class func sentences(nbSentences : Int = 3) -> String {
+    class func sentences(nbSentences: Int = 3) -> String {
         return sentences(nbSentences: nbSentences).joined(separator: "")
     }
-    
+
     /**
      Generate a paragraph with `nbSentences` random sentences.
      - parameter nbSentences: The number of sentences the paragraph should
@@ -142,81 +142,81 @@ class Lorem {
      between +/- 40% of `nbSentences`.
      - returns: Returns a paragraph with `nbSentences` random sentences.
      */
-    class func paragraph(nbSentences : Int = 3, variable : Bool = true) -> String {
+    class func paragraph(nbSentences: Int = 3, variable: Bool = true) -> String {
         if nbSentences <= 0 {
             return ""
         }
-        
+
         return sentences(nbSentences: variable ? nbSentences.randomize(variation: 40) : nbSentences).joined(separator: " ")
     }
-    
+
     /**
      Generate an array of random paragraphs.
      - parameter nbParagraphs: The number of paragraphs to generate.
      - returns: Returns an array of `nbParagraphs` paragraphs.
      */
-    class func paragraphs(nbParagraphs : Int = 3) -> [String] {
+    class func paragraphs(nbParagraphs: Int = 3) -> [String] {
         return (0..<nbParagraphs).map { _ in paragraph() }
     }
-    
+
     /**
      Generate a string of random paragrahs.
      - parameter nbParagraphs: The number of paragraphs to generate.
      - returns: Returns a string of random paragraphs.
      */
-    class func paragraphs(nbParagraphs : Int = 3) -> String {
+    class func paragraphs(nbParagraphs: Int = 3) -> String {
         return paragraphs(nbParagraphs: nbParagraphs).joined(separator: "\n\n")
     }
-    
+
     /**
      Generate a string of at most `maxNbChars` characters.
      - parameter maxNbChars: The maximum number of characters the string
      should contain.
      - returns: Returns a string of at most `maxNbChars` characters.
      */
-    class func text(maxNbChars : Int = 200) -> String {
-        var result : [String] = []
-        
+    class func text(maxNbChars: Int = 200) -> String {
+        var result: [String] = []
+
         if maxNbChars < 5 {
             return ""
         } else if maxNbChars < 25 {
             while result.count == 0 {
                 var size = 0
-                
+
                 while size < maxNbChars {
                     let w = (size != 0 ? " " : "") + word()
                     result.append(w)
                     size += w.count
                 }
-                
+
                 _ = result.popLast()
             }
         } else if maxNbChars < 100 {
             while result.count == 0 {
                 var size = 0
-                
+
                 while size < maxNbChars {
                     let s = (size != 0 ? " " : "") + sentence()
                     result.append(s)
                     size += s.count
                 }
-                
+
                 _ = result.popLast()
             }
         } else {
             while result.count == 0 {
                 var size = 0
-                
+
                 while size < maxNbChars {
                     let p = (size != 0 ? "\n" : "") + paragraph()
                     result.append(p)
                     size += p.count
                 }
-                
+
                 _ = result.popLast()
             }
         }
-        
+
         return result.joined(separator: "")
     }
 }
@@ -241,7 +241,7 @@ extension Array {
             }
         }
     }
-    
+
     /**
      Return a shuffled version of the array using the Fisher-Yates
      algorithm.
@@ -251,10 +251,10 @@ extension Array {
     func shuffled() -> [Element] {
         var list = self
         list.shuffle()
-        
+
         return list
     }
-    
+
     /**
      Return a random element from the array.
      - returns: Returns a random element from the array or `nil` if the
@@ -263,14 +263,14 @@ extension Array {
     func random() -> Element? {
         return (count > 0) ? self.shuffled()[0] : nil
     }
-    
+
     /**
      Return a random subset of `cnt` elements from the array.
      - returns: Returns a random subset of `cnt` elements from the array.
      */
-    func random(_ count : Int = 1) -> [Element] {
+    func random(_ count: Int = 1) -> [Element] {
         let result = shuffled()
-        
+
         return (count > result.count) ? result : Array(result[0..<count])
     }
 }
@@ -285,45 +285,44 @@ extension Int {
      
      - returns: Returns a random value between `min` and `max`.
      */
-    static func random(min : Int = 0, max : Int = Int.max) -> Int {
+    static func random(min: Int = 0, max: Int = Int.max) -> Int {
         precondition(min <= max, "attempt to call random() with min > max")
-        
+
         let diff   = UInt(bitPattern: max &- min)
         let result = UInt.random(min: 0, max: diff)
-        
+
         return min + Int(bitPattern: result)
     }
-    
-    func randomize(variation : Int) -> Int {
+
+    func randomize(variation: Int) -> Int {
         let multiplier = Double(Int.random(min: 100 - variation, max: 100 + variation)) / 100
         let randomized = Double(self) * multiplier
-        
+
         return Int(randomized) + 1
     }
 }
 
 private extension UInt {
-    static func random(min : UInt, max : UInt) -> UInt {
+    static func random(min: UInt, max: UInt) -> UInt {
         precondition(min <= max, "attempt to call random() with min > max")
-        
+
         if min == UInt.min && max == UInt.max {
-            var result : UInt = 0
+            var result: UInt = 0
             arc4random_buf(&result, MemoryLayout.size(ofValue: result))
-            
+
             return result
         } else {
             let range         = max - min + 1
             let limit         = UInt.max - UInt.max % range
-            var result : UInt = 0
-            
+            var result: UInt = 0
+
             repeat {
                 arc4random_buf(&result, MemoryLayout.size(ofValue: result))
             } while result >= limit
-            
+
             result = result % range
-            
+
             return min + result
         }
     }
 }
-

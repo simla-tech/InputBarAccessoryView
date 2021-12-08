@@ -10,16 +10,16 @@ import UIKit
 import InputBarAccessoryView
 
 final class iMessageInputBar: InputBarAccessoryView {
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func configure() {
         inputTextView.textContainerInset = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 36)
         inputTextView.placeholderLabelInsets = UIEdgeInsets(top: 8, left: 20, bottom: 8, right: 36)
@@ -45,5 +45,5 @@ final class iMessageInputBar: InputBarAccessoryView {
         separatorLine.isHidden = true
         isTranslucent = true
     }
-    
+
 }

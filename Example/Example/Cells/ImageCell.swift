@@ -28,27 +28,27 @@
 import UIKit
 
 class ImageCell: UICollectionViewCell {
-    
+
     class var reuseIdentifier: String {
         return "ImageCell"
     }
-    
+
     let imageView = UIImageView()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func setupView() {
         addSubview(imageView)
         imageView.contentMode = .scaleAspectFit
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         imageView.frame = bounds

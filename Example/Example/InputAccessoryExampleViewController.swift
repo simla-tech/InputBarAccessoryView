@@ -10,21 +10,21 @@ import UIKit
 import InputBarAccessoryView
 
 class InputAccessoryExampleViewController: CommonTableViewController {
-    
+
     // MARK: - Properties
-    
+
     override var inputAccessoryView: UIView? {
         return inputBar
     }
-    
+
     override var canBecomeFirstResponder: Bool {
         return true
     }
-    
+
     // MARK: - View Life Cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
     }
-    
+
 }

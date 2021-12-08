@@ -10,16 +10,16 @@ import UIKit
 import InputBarAccessoryView
 
 final class FacebookInputBar: InputBarAccessoryView {
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func configure() {
         let button = InputBarButtonItem()
         button.onKeyboardSwipeGesture { item, gesture in
@@ -49,5 +49,5 @@ final class FacebookInputBar: InputBarAccessoryView {
 
         shouldAnimateTextDidChangeLayout = true
     }
-    
+
 }

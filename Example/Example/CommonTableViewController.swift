@@ -10,14 +10,14 @@ import UIKit
 import InputBarAccessoryView
 
 class CommonTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    
+
     let inputBar: InputBarAccessoryView
-    
+
     let tableView = UITableView()
-    
+
     let conversation: SampleData.Conversation
 
-    private let mentionTextAttributes: [NSAttributedString.Key : Any] = [
+    private let mentionTextAttributes: [NSAttributedString.Key: Any] = [
         .font: UIFont.preferredFont(forTextStyle: .body),
         .foregroundColor: UIColor.systemBlue,
         .backgroundColor: UIColor.systemBlue.withAlphaComponent(0.1)
@@ -29,7 +29,7 @@ class CommonTableViewController: UIViewController, UITableViewDataSource, UITabl
         manager.delegate = self
         return manager
     }()
-    
+
     /// The object that manages autocomplete
     open lazy var autocompleteManager: AutocompleteManager = { [unowned self] in
         let manager = AutocompleteManager(for: self.inputBar.inputTextView)
@@ -37,7 +37,7 @@ class CommonTableViewController: UIViewController, UITableViewDataSource, UITabl
         manager.dataSource = self
         return manager
     }()
-    
+
     var hashtagAutocompletes: [AutocompleteCompletion] = {
         var array: [AutocompleteCompletion] = []
         for _ in 1...100 {
@@ -45,23 +45,23 @@ class CommonTableViewController: UIViewController, UITableViewDataSource, UITabl
         }
         return array
     }()
-    
+
     // Completions loaded async that get appeneded to local cached completions
     var asyncCompletions: [AutocompleteCompletion] = []
-    
+
     init(style: InputBarStyle, conversation: SampleData.Conversation) {
         self.conversation = conversation
         self.inputBar = style.generate()
         super.init(nibName: nil, bundle: nil)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         if #available(iOS 13, *) {
             view.backgroundColor = .systemBackground
         } else {
@@ -78,20 +78,20 @@ class CommonTableViewController: UIViewController, UITableViewDataSource, UITabl
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor)
         ])
-        
+
         inputBar.delegate = self
         inputBar.inputTextView.keyboardType = .twitter
- 
+
         // Configure AutocompleteManager
         autocompleteManager.register(prefix: "@", with: mentionTextAttributes)
         autocompleteManager.register(prefix: "#")
         autocompleteManager.maxSpaceCountDuringCompletion = 1 // Allow for autocompletes with a space
-        
+
         // Set plugins
         inputBar.inputPlugins = [autocompleteManager, attachmentManager]
-        
+
         // RTL Support
 //        autocompleteManager.paragraphStyle.baseWritingDirection = .rightToLeft
 //        inputBar.inputTextView.textAlignment = .right
@@ -101,7 +101,7 @@ class CommonTableViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return conversation.messages.count
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "\(ConversationCell.self)", for: indexPath)
         cell.imageView?.image = conversation.messages[indexPath.row].user.image
@@ -124,16 +124,16 @@ class CommonTableViewController: UIViewController, UITableViewDataSource, UITabl
 }
 
 extension CommonTableViewController: InputBarAccessoryViewDelegate {
-    
+
     // MARK: - InputBarAccessoryViewDelegate
-    
+
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        
+
         // Here we can parse for which substrings were autocompleted
         let attributedText = inputBar.inputTextView.attributedText!
         let range = NSRange(location: 0, length: attributedText.length)
-        attributedText.enumerateAttribute(.autocompleted, in: range, options: []) { (attributes, range, stop) in
-            
+        attributedText.enumerateAttribute(.autocompleted, in: range, options: []) { (_, range, _) in
+
             let substring = attributedText.attributedSubstring(from: range)
             let context = substring.attribute(.autocompletedContext, at: 0, effectiveRange: nil)
             print("Autocompleted: `", substring, "` with context: ", context ?? [])
@@ -158,15 +158,15 @@ extension CommonTableViewController: InputBarAccessoryViewDelegate {
             }
         }
     }
-    
+
     func inputBar(_ inputBar: InputBarAccessoryView, didChangeIntrinsicContentTo size: CGSize) {
         // Adjust content insets
         print(size)
         tableView.contentInset.bottom = size.height + 300 // keyboard size estimate
     }
-    
+
     @objc func inputBar(_ inputBar: InputBarAccessoryView, textViewTextDidChangeTo text: String) {
-        
+
         guard autocompleteManager.currentSession != nil, autocompleteManager.currentSession?.prefix == "#" else { return }
         // Load some data asyncronously for the given session.prefix
         DispatchQueue.global(qos: .default).async {
@@ -182,16 +182,15 @@ extension CommonTableViewController: InputBarAccessoryViewDelegate {
             }
         }
     }
-    
+
 }
 
 extension CommonTableViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         // Local variable inserted by Swift 4.2 migrator.
         let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
 
-        
         dismiss(animated: true, completion: {
             if let pickedImage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage {
                 let handled = self.attachmentManager.handleInput(of: pickedImage)
@@ -204,37 +203,36 @@ extension CommonTableViewController: UIImagePickerControllerDelegate, UINavigati
 }
 
 extension CommonTableViewController: AttachmentManagerDelegate {
-    
-    
+
     // MARK: - AttachmentManagerDelegate
-    
+
     func attachmentManager(_ manager: AttachmentManager, shouldBecomeVisible: Bool) {
         setAttachmentManager(active: shouldBecomeVisible)
     }
-    
+
     func attachmentManager(_ manager: AttachmentManager, didReloadTo attachments: [AttachmentManager.Attachment]) {
         inputBar.sendButton.isEnabled = manager.attachments.count > 0
     }
-    
+
     func attachmentManager(_ manager: AttachmentManager, didInsert attachment: AttachmentManager.Attachment, at index: Int) {
         inputBar.sendButton.isEnabled = manager.attachments.count > 0
     }
-    
+
     func attachmentManager(_ manager: AttachmentManager, didRemove attachment: AttachmentManager.Attachment, at index: Int) {
         inputBar.sendButton.isEnabled = manager.attachments.count > 0
     }
-    
+
     func attachmentManager(_ manager: AttachmentManager, didSelectAddAttachmentAt index: Int) {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
         present(imagePicker, animated: true, completion: nil)
     }
-    
+
     // MARK: - AttachmentManagerDelegate Helper
-    
+
     func setAttachmentManager(active: Bool) {
-        
+
         let topStackView = inputBar.topStackView
         if active && !topStackView.arrangedSubviews.contains(attachmentManager.attachmentView) {
             topStackView.insertArrangedSubview(attachmentManager.attachmentView, at: topStackView.arrangedSubviews.count)
@@ -247,11 +245,11 @@ extension CommonTableViewController: AttachmentManagerDelegate {
 }
 
 extension CommonTableViewController: AutocompleteManagerDelegate, AutocompleteManagerDataSource {
-    
+
     // MARK: - AutocompleteManagerDataSource
-    
+
     func autocompleteManager(_ manager: AutocompleteManager, autocompleteSourceFor prefix: String) -> [AutocompleteCompletion] {
-        
+
         if prefix == "@" {
             return conversation.users
                 .filter { $0.name != SampleData.shared.currentUser.name }
@@ -264,9 +262,9 @@ extension CommonTableViewController: AutocompleteManagerDelegate, AutocompleteMa
         }
         return []
     }
-    
+
     func autocompleteManager(_ manager: AutocompleteManager, tableView: UITableView, cellForRowAt indexPath: IndexPath, for session: AutocompleteSession) -> UITableViewCell {
-        
+
         guard let cell = tableView.dequeueReusableCell(withIdentifier: AutocompleteCell.reuseIdentifier, for: indexPath) as? AutocompleteCell else {
             fatalError("Oops, some unknown error occurred")
         }
@@ -277,30 +275,30 @@ extension CommonTableViewController: AutocompleteManagerDelegate, AutocompleteMa
         cell.textLabel?.attributedText = manager.attributedText(matching: session, fontSize: 15)
         return cell
     }
-    
+
     // MARK: - AutocompleteManagerDelegate
-    
+
     func autocompleteManager(_ manager: AutocompleteManager, shouldBecomeVisible: Bool) {
         setAutocompleteManager(active: shouldBecomeVisible)
     }
-    
+
     // Optional
     func autocompleteManager(_ manager: AutocompleteManager, shouldRegister prefix: String, at range: NSRange) -> Bool {
         return true
     }
-    
+
     // Optional
     func autocompleteManager(_ manager: AutocompleteManager, shouldUnregister prefix: String) -> Bool {
         return true
     }
-    
+
     // Optional
     func autocompleteManager(_ manager: AutocompleteManager, shouldComplete prefix: String, with text: String) -> Bool {
         return true
     }
-    
+
     // MARK: - AutocompleteManagerDelegate Helper
-    
+
     func setAutocompleteManager(active: Bool) {
         let topStackView = inputBar.topStackView
         if active && !topStackView.arrangedSubviews.contains(autocompleteManager.tableView) {
@@ -315,11 +313,11 @@ extension CommonTableViewController: AutocompleteManagerDelegate, AutocompleteMa
 }
 
 // Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+private func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
 	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
 }
 
 // Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+private func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
 	return input.rawValue
 }

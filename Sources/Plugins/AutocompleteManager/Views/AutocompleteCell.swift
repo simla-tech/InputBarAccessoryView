@@ -26,32 +26,33 @@
 //
 
 import UIKit
+import UILibrary
 
 open class AutocompleteCell: UITableViewCell {
-    
+
     // MARK: - Properties
-    
+
     open class var reuseIdentifier: String {
         return "AutocompleteCell"
     }
-    
+
     /// A boarder line anchored to the top of the view
     public let separatorLine = SeparatorLine()
-    
+
     open var imageViewEdgeInsets: UIEdgeInsets = .zero { didSet { setNeedsLayout() } }
-    
+
     // MARK: - Initialization
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         setup()
     }
-    
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
-    
+
     open override func prepareForReuse() {
         super.prepareForReuse()
         textLabel?.text = nil
@@ -65,25 +66,25 @@ open class AutocompleteCell: UITableViewCell {
         }
         separatorLine.isHidden = false
     }
-    
+
     // MARK: - Setup
-    
+
     private func setup() {
-        
+
         setupSubviews()
         setupConstraints()
     }
-    
+
     open func setupSubviews() {
-        
+
         addSubview(separatorLine)
     }
-    
+
     open func setupConstraints() {
-        
+
         separatorLine.addConstraints(left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, heightConstant: 0.5)
     }
-    
+
     open override func layoutSubviews() {
         super.layoutSubviews()
         guard let imageViewFrame = imageView?.frame else { return }
@@ -91,9 +92,9 @@ open class AutocompleteCell: UITableViewCell {
         let imageViewSize = CGSize(width: imageViewFrame.size.width - imageViewEdgeInsets.left - imageViewEdgeInsets.right, height: imageViewFrame.size.height - imageViewEdgeInsets.top - imageViewEdgeInsets.bottom)
         imageView?.frame = CGRect(origin: imageViewOrigin, size: imageViewSize)
     }
-    
+
     // MARK: - API [Public]
-    
+
     @available(*, deprecated, message: "This function has been moved to the `AutocompleteManager`")
     open func attributedText(matching session: AutocompleteSession) -> NSMutableAttributedString {
         fatalError("Please use `func attributedText(matching:, fontSize:)` implemented in the `AutocompleteManager`")

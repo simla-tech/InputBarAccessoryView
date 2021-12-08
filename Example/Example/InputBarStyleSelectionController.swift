@@ -10,11 +10,11 @@ import UIKit
 import SwiftUI
 
 class InputBarStyleSelectionController: UITableViewController {
-    
+
     let styles = InputBarStyle.allCases
 
     let tabBarExampleIndexPath = IndexPath(row: 6, section: 2)
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
@@ -31,7 +31,7 @@ class InputBarStyleSelectionController: UITableViewController {
         }
         navigationController?.navigationBar.barTintColor = .systemBlue
     }
-    
+
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return [
             0: "InputBarViewController",
@@ -40,11 +40,11 @@ class InputBarStyleSelectionController: UITableViewController {
             3: "FAQ/Community Examples"
         ][section]!
     }
-    
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 4
     }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
         case 0:     return 1
@@ -53,7 +53,7 @@ class InputBarStyleSelectionController: UITableViewController {
         default:    fatalError("unknown section \(section)")
         }
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         switch (indexPath.section, indexPath.row) {
@@ -68,7 +68,7 @@ class InputBarStyleSelectionController: UITableViewController {
         cell.accessoryType = .disclosureIndicator
         return cell
     }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         if indexPath.section == 0 {

@@ -26,7 +26,7 @@ final class READMEPreviewViewController: InputBarViewController {
         inputBar.inputTextView.autocapitalizationType = .none
         inputBar.inputTextView.keyboardType = .twitter
         let size = UIFont.preferredFont(forTextStyle: .body).pointSize
-        autocompleteManager.register(prefix: "@", with: [.font: UIFont.preferredFont(forTextStyle: .body),.foregroundColor: UIColor.systemBlue,.backgroundColor: UIColor.systemBlue.withAlphaComponent(0.1)])
+        autocompleteManager.register(prefix: "@", with: [.font: UIFont.preferredFont(forTextStyle: .body), .foregroundColor: UIColor.systemBlue, .backgroundColor: UIColor.systemBlue.withAlphaComponent(0.1)])
         autocompleteManager.register(prefix: "#", with: [.font: UIFont.boldSystemFont(ofSize: size)])
         inputBar.inputPlugins = [autocompleteManager]
     }

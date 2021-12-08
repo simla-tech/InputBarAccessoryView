@@ -30,7 +30,7 @@ import UIKit
 
 /// AttachmentManagerDataSource is a protocol to passes data to the AttachmentManager
 public protocol AttachmentManagerDataSource: AnyObject {
-    
+
     /// The AttachmentCell for the attachment that is to be inserted into the AttachmentView
     ///
     /// - Parameters:
@@ -39,7 +39,7 @@ public protocol AttachmentManagerDataSource: AnyObject {
     ///   - index: The index in the AttachmentView
     /// - Returns: An AttachmentCell
     func attachmentManager(_ manager: AttachmentManager, cellFor attachment: AttachmentManager.Attachment, at index: Int) -> AttachmentCell
-    
+
     /// The CGSize of the AttachmentCell for the attachment that is to be inserted into the AttachmentView
     ///
     /// - Parameters:
@@ -50,8 +50,8 @@ public protocol AttachmentManagerDataSource: AnyObject {
     func attachmentManager(_ manager: AttachmentManager, sizeFor attachment: AttachmentManager.Attachment, at index: Int) -> CGSize?
 }
 
-public extension AttachmentManagerDataSource{
-    
+public extension AttachmentManagerDataSource {
+
     // Default implementation, if data source method is not given, use autocalculated default.
     func attachmentManager(_ manager: AttachmentManager, sizeFor attachment: AttachmentManager.Attachment, at index: Int) -> CGSize? {
         return nil

@@ -10,14 +10,14 @@ import Foundation
 import InputBarAccessoryView
 
 enum InputBarStyle: String, CaseIterable {
-    
+
     case imessage = "iMessage"
     case slack = "Slack"
     case githawk = "GitHawk"
     case facebook = "Facebook"
     case noTextView = "No InputTextView"
     case `default` = "Default"
-    
+
     func generate() -> InputBarAccessoryView {
         switch self {
         case .imessage: return iMessageInputBar()
