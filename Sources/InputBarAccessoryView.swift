@@ -341,6 +341,8 @@ open class InputBarAccessoryView: UIView {
     public var items: [InputItem] {
         return [leftStackViewItems, rightStackViewItems, bottomStackViewItems, topStackViewItems, nonStackViewItems].flatMap { $0 }
     }
+    
+    public var customTopStackViewHeight: CGFloat?
 
     // MARK: - Auto-Layout Constraint Sets
 
@@ -588,7 +590,7 @@ open class InputBarAccessoryView: UIView {
 
         // Calculate the required height
         let totalPadding = padding.top + padding.bottom + topStackViewPadding.top + middleContentViewPadding.top + middleContentViewPadding.bottom
-        let topStackViewHeight = topStackView.arrangedSubviews.count > 0 ? topStackView.bounds.height : 0
+        let topStackViewHeight = self.customTopStackViewHeight ?? (topStackView.arrangedSubviews.count > 0 ? topStackView.bounds.height : 0)
         let bottomStackViewHeight = bottomStackView.arrangedSubviews.count > 0 ? bottomStackView.bounds.height : 0
         let verticalStackViewHeight = topStackViewHeight + bottomStackViewHeight
         let requiredHeight = inputTextViewHeight + totalPadding + verticalStackViewHeight
