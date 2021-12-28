@@ -63,7 +63,7 @@ open class InputBarAccessoryView: UIView {
     open lazy var blurView: UIVisualEffectView = {
         var blurEffect = UIBlurEffect(style: .light)
         if #available(iOS 13, *) {
-            blurEffect = UIBlurEffect(style: .systemMaterial)
+            blurEffect = UIBlurEffect(style: .systemThinMaterial)
         }
         let view = UIVisualEffectView(effect: blurEffect)
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -79,7 +79,7 @@ open class InputBarAccessoryView: UIView {
             }
             blurView.isHidden = !isTranslucent
             let color: UIColor = backgroundView.backgroundColor ?? InputBarAccessoryView.defaultBackgroundColor
-            backgroundView.backgroundColor = isTranslucent ? color.withAlphaComponent(0.75) : color
+            backgroundView.backgroundColor = isTranslucent ? color.withAlphaComponent(0.7) : color
         }
     }
 
@@ -453,7 +453,7 @@ open class InputBarAccessoryView: UIView {
         separatorLine.addConstraints(topAnchor, left: backgroundView.leftAnchor, right: backgroundView.rightAnchor, heightConstant: separatorLine.height)
 
         backgroundViewLayoutSet = NSLayoutConstraintSet(
-            top: backgroundView.topAnchor.constraint(equalTo: topStackView.bottomAnchor),
+            top: backgroundView.topAnchor.constraint(equalTo: topStackView.topAnchor),
             bottom: backgroundView.bottomAnchor.constraint(equalTo: bottomAnchor),
             left: backgroundView.leftAnchor.constraint(equalTo: leftAnchor, constant: frameInsets.left),
             right: backgroundView.rightAnchor.constraint(equalTo: rightAnchor, constant: -frameInsets.right)
@@ -890,9 +890,7 @@ open class InputBarAccessoryView: UIView {
             invalidateIntrinsicContentSize()
             if shouldAnimateTextDidChangeLayout {
                 inputTextView.layoutIfNeeded()
-                UIView.animate(withDuration: 0.15) {
-                    self.layoutContainerViewIfNeeded()
-                }
+                UIView.animate(withDuration: 0.35, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 3, options: [.beginFromCurrentState], animations: self.layoutContainerViewIfNeeded, completion: nil)
             }
         }
     }
