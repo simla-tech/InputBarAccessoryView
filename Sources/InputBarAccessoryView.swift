@@ -341,7 +341,7 @@ open class InputBarAccessoryView: UIView {
     public var items: [InputItem] {
         return [leftStackViewItems, rightStackViewItems, bottomStackViewItems, topStackViewItems, nonStackViewItems].flatMap { $0 }
     }
-    
+
     public var customTopStackViewHeight: CGFloat?
 
     // MARK: - Auto-Layout Constraint Sets
