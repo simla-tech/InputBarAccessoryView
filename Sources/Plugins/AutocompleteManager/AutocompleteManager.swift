@@ -26,7 +26,6 @@
 //
 
 import UIKit
-import UILibrary
 
 public extension NSAttributedString.Key {
 

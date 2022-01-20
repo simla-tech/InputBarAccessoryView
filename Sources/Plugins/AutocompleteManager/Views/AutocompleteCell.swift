@@ -26,7 +26,6 @@
 //
 
 import UIKit
-import UILibrary
 
 open class AutocompleteCell: UITableViewCell {
 
