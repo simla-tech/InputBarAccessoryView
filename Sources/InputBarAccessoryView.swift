@@ -319,6 +319,22 @@ open class InputBarAccessoryView: UIView {
         }
     }
 
+    // open override var canBecomeFirstResponder: Bool {
+    //    return self.inputTextView.canBecomeFirstResponder
+    // }
+    //
+    // open override var canResignFirstResponder: Bool {
+    //    return self.inputTextView.canResignFirstResponder
+    // }
+
+    open override func becomeFirstResponder() -> Bool {
+        self.inputTextView.becomeFirstResponder()
+    }
+
+    open override func resignFirstResponder() -> Bool {
+        self.inputTextView.resignFirstResponder()
+    }
+
     /// Holds the InputPlugin plugins that can be used to extend the functionality of the InputBarAccessoryView
     open var inputPlugins = [InputPlugin]()
 
