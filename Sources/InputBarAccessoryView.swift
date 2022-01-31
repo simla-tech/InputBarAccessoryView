@@ -906,7 +906,7 @@ open class InputBarAccessoryView: UIView {
             invalidateIntrinsicContentSize()
             if shouldAnimateTextDidChangeLayout {
                 inputTextView.layoutIfNeeded()
-                UIView.animate(withDuration: 0.35, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 3, options: [.beginFromCurrentState], animations: self.layoutContainerViewIfNeeded, completion: nil)
+                UIView.animateWithSpring(animations: self.layoutContainerViewIfNeeded)
             }
         }
     }
