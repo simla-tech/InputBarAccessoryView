@@ -297,6 +297,8 @@ open class InputBarAccessoryView: UIView {
     /// The height that will fit the current text in the InputTextView based on its current bounds
     public var requiredInputTextViewHeight: CGFloat {
         guard middleContentView == inputTextView else {
+            middleContentView?.layoutIfNeeded()
+            middleContentView?.invalidateIntrinsicContentSize()
             return middleContentView?.intrinsicContentSize.height ?? 0
         }
         let maxTextViewSize = CGSize(width: inputTextView.bounds.width, height: .greatestFiniteMagnitude)
@@ -457,8 +459,6 @@ open class InputBarAccessoryView: UIView {
         contentView.addSubview(leftStackView)
         contentView.addSubview(rightStackView)
         contentView.addSubview(bottomStackView)
-        middleContentViewWrapper.addSubview(inputTextView)
-        middleContentView = inputTextView
         setStackViewItems([sendButton], forStack: .right, animated: false)
     }
 
@@ -615,7 +615,7 @@ open class InputBarAccessoryView: UIView {
 
     open override func layoutIfNeeded() {
         super.layoutIfNeeded()
-        inputTextView.layoutIfNeeded()
+        middleContentView?.layoutIfNeeded()
     }
 
     open override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
