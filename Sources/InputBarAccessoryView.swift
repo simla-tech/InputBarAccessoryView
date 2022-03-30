@@ -716,7 +716,7 @@ open class InputBarAccessoryView: UIView {
         guard let view = view else { return }
         middleContentViewWrapper.addSubview(view)
         view.fillSuperview()
-
+        view.layoutIfNeeded()
         performLayout(animated) { [weak self] in
             guard self?.superview != nil else { return }
             self?.middleContentViewWrapper.layoutIfNeeded()
