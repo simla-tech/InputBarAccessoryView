@@ -187,7 +187,7 @@ open class InputBarAccessoryView: UIView {
      ````
 
      */
-    open var frameInsets: HorizontalEdgePadding = .zero {
+    open var frameInsets: HorizontalEdgeInsets = .zero {
         didSet {
             updateFrameInsets()
         }
