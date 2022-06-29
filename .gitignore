@@ -2,12 +2,14 @@
 .DS_Store
 
 # Xcode
+*.xcodeproj
 
 ## Build generated
 build/
 .build
 .swiftpm
 DerivedData
+Derived
 
 ## Various settings
 *.pbxuser
