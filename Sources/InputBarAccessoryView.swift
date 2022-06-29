@@ -438,9 +438,6 @@ open class InputBarAccessoryView: UIView {
         contentView.addSubview(leftStackView)
         contentView.addSubview(rightStackView)
         contentView.addSubview(bottomStackView)
-        middleContentViewWrapper.addSubview(inputTextView)
-        middleContentView = inputTextView
-        setStackViewItems([sendButton], forStack: .right, animated: false)
     }
     
     /// Sets up the initial constraints of each subview
@@ -587,16 +584,17 @@ open class InputBarAccessoryView: UIView {
         
         // Calculate the required height
         let totalPadding = padding.top + padding.bottom + topStackViewPadding.top + middleContentViewPadding.top + middleContentViewPadding.bottom
-        let topStackViewHeight = topStackView.arrangedSubviews.count > 0 ? topStackView.bounds.height : 0
+        let topStackViewHeight = topStackView.arrangedSubviews.count > 0 ? topStackView.arrangedSubviews.reduce(into: 0, { $0 += $1.intrinsicContentSize.height }) : 0
         let bottomStackViewHeight = bottomStackView.arrangedSubviews.count > 0 ? bottomStackView.bounds.height : 0
         let verticalStackViewHeight = topStackViewHeight + bottomStackViewHeight
         let requiredHeight = inputTextViewHeight + totalPadding + verticalStackViewHeight
         return CGSize(width: UIView.noIntrinsicMetric, height: requiredHeight)
     }
-
-    open override func layoutIfNeeded() {
-        super.layoutIfNeeded()
-        inputTextView.layoutIfNeeded()
+    
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        self.middleContentViewWrapper.layoutIfNeeded()
+        self.invalidateIntrinsicContentSize()
     }
 
     open override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
@@ -697,12 +695,20 @@ open class InputBarAccessoryView: UIView {
         guard let view = view else { return }
         middleContentViewWrapper.addSubview(view)
         view.fillSuperview()
-
+        view.layoutIfNeeded()
         performLayout(animated) { [weak self] in
             guard self?.superview != nil else { return }
             self?.middleContentViewWrapper.layoutIfNeeded()
             self?.invalidateIntrinsicContentSize()
         }
+    }
+        
+    open override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        guard self.superview != nil else { return }
+        self.middleContentView?.layoutIfNeeded()
+        self.middleContentViewWrapper.layoutIfNeeded()
+        self.invalidateIntrinsicContentSize()
     }
     
     /// Removes all of the arranged subviews from the InputStackView and adds the given items.
