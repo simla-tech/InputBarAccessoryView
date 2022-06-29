@@ -1,7 +1,19 @@
 #  Changelog
 - Master:
+   - Nothing yet
+- 6.1.0
+   - [#230](https://github.com/nathantannar4/InputBarAccessoryView/pull/230) Added `additionalInputViewBottomConstraintConstant` to `KeyboardManager` as a way for providing additional bottom constraint constant offset for `inputAccessoryView`. Example implementation can be found in `AdditionalBottomSpaceExampleViewController`
+- 6.0.0
+   - **Breaking change**: Drop iOS 12 support
+   - **Breaking change**: Drop CocoaPods support & RxSwift extension (it was available only via CocoaPods)
+   - KeyboardManager will not update position of inputAccessoryView from interactive dismiss panGesture when the keyboard is floating
+   - Update docs
+- 5.5.0
+   - Update SPM tools to Swift 5.5
+   - Added new optional delegate method for custom attachments size
+   - Added new animations for left/right stack view constraints
 - 5.4.0
-   - Make sure framework is ready for XCode 13
+   - Make sure framework is ready for Xcode 13
    - Fix availability in AppExtensions
    - Fix Package.swift to support iOS 12+ only
    - Reset cachedNotification when keyboard is programmatically dismissed
@@ -22,7 +34,7 @@
    - Fix SPM warnings about Info.plist file
 - 5.2.0
     - Drop support for iOS 11 and bump minimum version to iOS 12+
-    - Support Swift 5.3 and higher for XCode 12
+    - Support Swift 5.3 and higher for Xcode 12
 - 5.1.0
     - Added support for smooth height transitions when the text view expands, set `shouldAnimateTextDidChangeLayout` to `true`
     - Fixed accessibility of `HorizontalEdgePadding` initializers and a typo in its filename
@@ -110,7 +122,7 @@
 - 1.3.0
     - iPhone X Correctedes
 - 1.2.0
-    - Better XCode docs
+    - Better Xcode docs
     - `InputItem` is now a protocol that you can give to the `InputBarAccessoryView`
     - `InputPlugin` is now a protocol that you can conform to make a plugin
     - `AutocompleteManager` and `AttactchmentManager` are no longer members of  `InputBarAccessoryView` by default. You will need to create them and assign them to the `InputPlugin` property of the `InputBarAccessoryView`

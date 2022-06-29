@@ -10,7 +10,6 @@
 - [x] Autocomplete attributed text highlighting
 - [x] Reactive components that respond to given events
 - [x] Top/Bottom/Left/Right `InputStackView`s that act as toolbars to place buttons
-- [x] `RxSwift`/`RxCocoa` Support with `RxExtensions` Cocoapod subspec
 - [x] Drop in attachment view for file/photo management
 - [x] Plugin support for your own `InputPlugin`s
 - [x] Compatible with all iPhones and iPads
@@ -23,43 +22,24 @@ Once you have your Swift package set up, adding InputBarAccessoryView as a depen
 
 ```
 dependencies: [
-    .package(url: "https://github.com/nathantannar4/InputBarAccessoryView.git", .upToNextMajor(from: "5.2.0"))
+    .package(url: "https://github.com/nathantannar4/InputBarAccessoryView.git", .upToNextMajor(from: "6.0.0"))
 ]
 ```
-You can also add it via XCode SPM editor with URL:
+You can also add it via Xcode SPM editor with URL:
 ```
 https://github.com/nathantannar4/InputBarAccessoryView.git
-```
-To make `RxSwift`/`RxCocoa` extensions work you need to explicitly import `Rx` dependencies.
-
-### Installation via CocoaPods
-
-```ruby
-# Swift 5.3
-pod 'InputBarAccessoryView'
-
-# Swift 5.0
-pod 'InputBarAccessoryView', '5.1.0'
-```
-
-### Installation via Carthage
-
-```ruby
-# Swift 5.3
-github "nathantannar4/InputBarAccessoryView"
-
-# Swift 5.0
-github "nathantannar4/InputBarAccessoryView" "5.1.0"
 ```
 
 ### Requirements
 
-iOS 12.0+
-Swift 5.3
+iOS 13.0+
+Swift 5.5
+
+> The latest iOS 12 release is v5.5.0
+
+> CocoaPods and RxExtensions were removed in 6.0.0
 
 > The latest iOS 11 release is v5.1.0
-
-> The latest iOS 9 + iOS 10 release is v4.3.3
 
 > The latest Swift 5.0 release is v5.1.0 
 
@@ -94,28 +74,24 @@ Add your app to the list of apps using this library and make a pull request.
 iMessage style [TypingIndicator](https://github.com/nathantannar4/TypingIndicator) for chat apps
 
 ## Latest Releases
+6.1.0
+   - #230 Added additionalInputViewBottomConstraintConstant to KeyboardManager as a way for providing additional bottom constraint constant offset for inputAccessoryView. Example implementation can be found in AdditionalBottomSpaceExampleViewController
+
+6.0.0
+   - **Breaking change**: Drop iOS 12 support
+   - **Breaking change**: Drop CocoaPods support & RxSwift extension (it was available only via CocoaPods)
+   - KeyboardManager will not update position of inputAccessoryView from interactive dismiss panGesture when the keyboard is floating
+   - Update docs
+
+5.5.0
+   - Update SPM tools to Swift 5.5
+   - Added new optional delegate method for custom attachments size
+   - Added new animations for left/right stack view constraints
+
 5.4.0
-   - Make sure framework is ready for XCode 13
+   - Make sure framework is ready for Xcode 13
    - Fix availability in AppExtensions
    - Fix Package.swift to support iOS 12+ only
-
-5.3.0
-   - Allow setting `canBecomeFirstResponder`
-   - Fix interactive keyboard dismissal lag
-   - Add example implemntation of `sendButton` animation
-
-5.2.3
-   - Fixed appendSpaceOnCompletion inserting space at wrong location
-
-5.2.2
-   - Added an optional offset in KeyboardManager.bind(tableView:)
-   - Change reuseIdentifier from `public` to `open` to allow inheritance
-   - Fix send button loading indicator for dark mode
-   - Fix iOS 14 UIPasteboard system notification with images
-
-5.2.0
-   - Drop support for iOS 11 and bump minimum version to iOS 12+
-   - Support Swift 5.3 and higher for XCode 12
     
 See [CHANGELOG](./CHANGELOG.md) for more details and older releases.
 
