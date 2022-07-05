@@ -136,7 +136,7 @@ open class InputBarAccessoryView: UIView {
     public private(set) weak var middleContentView: UIView?
 
     /// A view to wrap the `middleContentView` inside
-    private let middleContentViewWrapper: UIView = {
+    public let middleContentViewWrapper: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
