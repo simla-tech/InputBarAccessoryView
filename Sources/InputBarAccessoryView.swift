@@ -26,6 +26,7 @@
 //
 
 import UIKit
+import UILibrary
 
 /// A powerful InputAccessoryView ideal for messaging applications
 open class InputBarAccessoryView: UIView {
@@ -652,7 +653,7 @@ open class InputBarAccessoryView: UIView {
         deactivateConstraints()
         if animated {
             DispatchQueue.main.async {
-                UIView.animate(withDuration: 0.3, animations: animations)
+                UIView.animateWithSpring(animations: animations)
             }
         } else {
             UIView.performWithoutAnimation { animations() }
@@ -875,7 +876,7 @@ open class InputBarAccessoryView: UIView {
     @objc
     open func inputTextViewDidChange() {
         
-        let trimmedText = inputTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedText: String = inputTextView.text
         
         if shouldManageSendButtonEnabledState {
             var isEnabled = !trimmedText.isEmpty
@@ -896,8 +897,8 @@ open class InputBarAccessoryView: UIView {
             // Prevent un-needed content size invalidation
             invalidateIntrinsicContentSize()
             if shouldAnimateTextDidChangeLayout {
-                inputTextView.layoutIfNeeded()
-                UIView.animate(withDuration: 0.15) {
+                UIView.animateWithSpring {
+                    self.inputTextView.layoutIfNeeded()
                     self.layoutContainerViewIfNeeded()
                 }
             }

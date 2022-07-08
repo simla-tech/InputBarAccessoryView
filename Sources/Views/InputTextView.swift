@@ -229,12 +229,6 @@ open class InputTextView: UITextView {
     private func textViewTextDidChange() {
         let isPlaceholderHidden = !text.isEmpty
         placeholderLabel.isHidden = isPlaceholderHidden
-        // Adjust constraints to prevent unambiguous content size
-        if isPlaceholderHidden {
-            placeholderLabelConstraintSet?.deactivate()
-        } else {
-            placeholderLabelConstraintSet?.activate()
-        }
     }
     
     // MARK: - Image Paste Support
