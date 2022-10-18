@@ -145,6 +145,8 @@ open class InputTextView: UITextView {
     /// The constraints of the placeholderLabel
     private var placeholderLabelConstraintSet: NSLayoutConstraintSet?
  
+    public var isPasteboardEnabled: Bool = true
+    
     // MARK: - Initializers
     
     public convenience init() {
@@ -234,7 +236,7 @@ open class InputTextView: UITextView {
     // MARK: - Image Paste Support
     
     open override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-
+        guard isPasteboardEnabled else { return false }
         if action == NSSelectorFromString("paste:") && UIPasteboard.general.hasImages {
             return isImagePasteEnabled
         }
